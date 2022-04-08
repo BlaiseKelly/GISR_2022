@@ -1,0 +1,37 @@
+/* Whole document: */
+
+body{
+  font-family: "Franklin Gothic Medium";
+  /*background-color: #F6F6F6;*/
+  background-color: #7FADC9;
+ 
+}
+
+
+/*
+.bg-primary {
+  background-color: #E5087D;
+}
+
+*/
+
+a {
+    text-decoration: none;
+}
+
+/* unvisited link */
+a {
+    color: black;
+}
+
+a {
+  box-shadow: none;
+}
+
+/* mouse over link */
+/*
+a:hover {
+    color: #B2CDDF;
+    text-decoration: none;
+}
+*/

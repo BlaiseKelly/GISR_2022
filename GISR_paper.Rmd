@@ -1,0 +1,72 @@
+---
+output:
+  pdf_document:
+    template: GISRUKPaperTemplate.tex
+bibliography: "../TNO_main.bib"
+---
+
+```{r, eval=FALSE, echo=FALSE}
+rbbt::bbt_update_bib(path_rmd = "example-paper.Rmd", path_bib = "../TNO_main.bib")
+```
+
+<!-- % **************  MAIN BODY OF THE PAPER ************** -->
+Introduction
+==========================
+Attributing population mortality to specific causes, such as air pollution concentrations, is important for an understanding of the risk posed to society from specific factors. However, the air pollution and population data used in these assessments is often aggregated over large periods and generally assumes populations stay within their home area all the time. In reality air pollution concentrations and the distribution of the population varies throughout the day, depending on activities across a city. 
+
+This work looks at using Risk Coefficients from an adapted version of the Global Burden of Disease (GBD) Integrated Exposure Response (IER) model. The Coefficients define the Relative Risk, which is a ratio of the probability of an event occuring, in this case diseases commonly associated with air pollution, compared to the probability in the non-exposed group [@tenny_relative_2021]. This ratio is applied to high resolution mortality data and high temporal and spatial resolution population and air pollution concentration estimates, to enable impacts from pollution to be better estimated at the regional/postcode level for Eindhoven in the Netherlands.
+
+The work is being undertaken as part of the 'Exposense' Early Research Programme (ERP)[@lombears_tno_2021], which aims to develop a system providing personalised advice on sustainable lifestyle habits, modelling and health community support [@tno_exposome_2018].
+
+Spatial definition
+==========================
+A key aspect of this proposed system is the area over which the data inputs are aggregated. It is common for areas of the city to be defined by postcodes. In the Netherlands Postcodes range from single digit (PC1), which refers to municipality level to 6 digit (PC6), which can define a few houses. Postcode level 4 (PC4) is commonly used for population data as there are enough people in each area to provide meaningful data yet has good spatial resolution.
+
+Statistics Netherlands (CBS) most commonly uses regional divisions for population data. 'Neighbourhood' is the smallest regional division[@statistiek_opbouw_nodate] which is somewhere in between PC4 and PC6. 
+
+Alternatively another method for defining urban areas has been proposed called the 'Clockboard' [@lovelace_clockboard_2021]. This divides the city into segments that reflect the numbering order of a clock face and which increase in size away from the city. These three spatial divisions are shown in Figure 1.
+
+```{r tm3, echo=FALSE, fig.cap="From left: PC4, regional and clockboard spatial area definitions", out.width="100%"}
+knitr::include_graphics("../../plots/3_regions.png")
+
+```
+
+Model Components
+==========================
+Mortality and exposure risk
+------------
+Since 1996, the Global Burden of Disease (GBD) concept has been used to estimate mortality and morbidity for a range of diseases and injury[@pruss-ustun_assessing_2003]. In 2010 this was taken a step further with the development of the Integrated Exposure Risk (IER) model [@ihme_global_2014] which has gradually been refined and expanded until the most recent version in 2019 [@ihme_institute_2020]. Fantke et el has built on this work, evaluating regional specific Particulate Matter <2.5$\mu m$ (PM~2.5~) exposure response models to produce a consistent set of regional specific global effect factors [@fantke_global_2019]. Similar work has also combined high resolution concentration data from chemistry transport models with regional specific mortality data [@southerland_global_2022][@van_donkelaar_monthly_2021].
+
+Mortality data
+------------
+CBS has figures on deaths by major underlying causes of death (Beldo list), age and gender by region. Deaths are shown according to the municipality of registration and are available at neighbourhood level [@cbs_statline_2022]. These can be combined with the concentration and population estimates in the GBD IER models.
+
+Concentration data
+------------
+Hourly PM~2.5~ concentration data at a 1km x 1km resolution is estimated using the LOTOS EUROS chemistry transport model [@manders_curriculum_2017]. The model forms one of the nine models that are used in the operational ensemble of Copernicus Atmosphere Monitoring Service [@copernicus_homepage_2022] which provides daily analyses and forecasts of of air quality and atmospheric pollutant concentrations over Europe. The concentrations from this model were assimilated with ground based measurement sites, including the Innovative Air Measurement System (ILM) in Eindhoven [@otjes_aireas_2016]. It uses a Local Ensemble Transform Kalman Filter (LETKF) to reduce the bias error [@skoulidou_changes_2021]. This provides hourly concentration estimates at 1km spatial resolution, both in real-time and historically. It is also planned to assign 'labels' to pollutants from particular emission sources to the model. This will allow source apportionment of the final concentrations, enabling mortality impacts to be ascribed to sources and potentially allowing differentiation between different types of PM based on chemical composition and potential of causing health damage.
+
+Population data
+------------
+Zicht Op Data and Resono are able to provide estimates from mobile smart phones of approximately 13% of the Dutch population for the number of persons in any pre defined 'area' of the Netherlands using a propriety algorithm called 'hyperfencing'. This is combined with a cluster analysis that applies a machine learning algorithm which, together, determines the probability that a device being carried by a user is inside or outside this 'hyperfence' [@van_woensel_resono_2021]. 
+
+Using this technique for the district of Eindhoven, it is possible to estimate a real time intensity figure to indicate how busy a defined area is at 15 minute intervals. More accurate population estimates, including demographic data, can be retrieved a few days later. Additionally the data can be grouped by 'home postcode' which allows more detailed demographic data available from CBS for each postcode to be applied to the historic data [@zicht_op_onze_2021].
+
+Conclusion
+==========================
+This submission describes a reproducible modelling methodology being developed for combining high spatial and temporal resolution population and PM~2.5~ concentration data with weekly neighbourhood mortality statistics to develop a better understanding of where the risk to populations is greatest and also where policy measures should be targeted.
+
+Acknowledgements
+================
+Acknowledgement is made to Zicht Op Data and Resono who have provided the population data for this study.
+
+Biography
+=========
+**Blaise Kelly** specialises in air quality modelling and geospatial analysis.
+**Dr. Bas Henzing** is an expert in atmospheric composition, aerosol  and satellite observations and air quality modelling.
+**Ioanna Skoulidou** is studying for a PhD in Atmospheric Physics at the University of Thessaloniki.
+**Dr. Robert Jansen** is a senior researcher at Marble Market and specialises in research design, data visualisation and analytics, advanced statistical analysis, monitoring and evaluation studies.
+**Dr. Janot Tokaya** has a background in physics. For the past two years he has moved to the realm of air quality modelling and focuses on improving aerosol modelling using satellite and ground based observations.
+**Dr. Mara Hauck** specialises in the LCA of energy options, chemical risk assessment modelling and uncertainty assessment.
+
+References and Citations
+========================

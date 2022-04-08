@@ -1,0 +1,24 @@
+type,activity
+university,day sed
+bridge,non
+office,day sed
+sports_centre,day act
+service,day mid
+roof,non
+commercial,day mid
+industrial,day mid
+shed,non
+house,resi
+apartments,resi
+garage,non
+retail,day mid
+construction,day act
+parking,non
+residential,resi
+forest grass,non
+forest,non
+grass,non
+residential grass,non
+forest residential,resi
+grass residential,resi
+commercial commercial,day mid
